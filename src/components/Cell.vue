@@ -1,11 +1,11 @@
 <template>
-	<div :class="{ donut: donut, cinnamon: cinnamon}"></div>
+	<div @click="clickCell(coordinates)" :class="{ donut: val=='d', cinnamon: val=='c'}"></div>
 </template>
 
 <script>
 
 export default {
-	props: ["coordinates"],
+	props: ["coordinates", "clickCell", "val"],
 	data() {
 		return {
 			donut: false,

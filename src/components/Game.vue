@@ -1,22 +1,16 @@
 <template>
 	<div>
 		<h1>Game</h1>
-		<h4 class="mb-3">{{player1}} vs {{player2}}</h4>
+		<h4 class="mb-3">
+			<span :class="{'font-weight-bold': currentPlayer == 0}">{{players[0]}}</span> 
+			vs 
+			<span :class="{'font-weight-bold': currentPlayer == 1}">{{players[1]}}</span>
+		</h4>
 		<table class="col-md-4 col-sm-10 mx-auto">
-			<tr>
-				<td><cell :coodinates="[0, 0]"></cell></td>
-				<td><cell :coodinates="[1, 0]"></cell></td>
-				<td><cell :coodinates="[2, 0]"></cell></td>
-			</tr>
-			<tr>
-				<td><cell :coodinates="[0, 1]"></cell></td>
-				<td><cell :coodinates="[1, 1]"></cell></td>
-				<td><cell :coodinates="[2, 1]"></cell></td>
-			</tr>
-			<tr>
-				<td><cell :coodinates="[0, 2]"></cell></td>
-				<td><cell :coodinates="[1, 2]"></cell></td>
-				<td><cell :coodinates="[2, 2]"></cell></td>
+			<tr v-for="y in indexes" :key=y>
+				<td v-for="x in indexes" :key=x>
+					<cell :coordinates="[x, y]" :clickCell="clickCell" :val="board[y][x]"></cell>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -27,12 +21,23 @@
 import Cell from './Cell.vue'
 
 export default {
-	props: ["player1", "player2"],
+	props: ["players"],
 	data() {
-		currentPlayer = 0
+		return {
+			currentPlayer: 0,
+			board: Array(3).fill().map(()=>Array(3).fill()),
+			indexes: [0, 1, 2],
+			options: ['d', 'c']
+		}
 	},
 	components: {
 		Cell
+	},
+	methods: {
+		clickCell(coordinates) {
+			this.board[coordinates[1]][coordinates[0]] = this.options[this.currentPlayer];
+			this.currentPlayer = this.currentPlayer == 1 ? 0 : 1;
+		}
 	}
 }
 </script>

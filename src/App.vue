@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<Game :player1="'Player 1'" :player2="'Player 2'"/>
+		<Game :players="['Player 1', 'Player 2']"/>
 	</div>
 </template>
 
