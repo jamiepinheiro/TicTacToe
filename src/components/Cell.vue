@@ -1,5 +1,8 @@
 <template>
-	<div @click="clickCell(coordinates)" :class="{ donut: val=='d', cinnamon: val=='c'}"></div>
+	<div 
+	@click="clickCell(coordinates)"
+	:class="{ donut: val=='d', cinnamon: val=='c', clickable: val == ''}">
+	</div>
 </template>
 
 <script>
@@ -29,7 +32,8 @@ export default {
 	.cinnamon {
 		background-image: url("../assets/cinnamon.svg");
 	}
-	div:hover {
+
+	.clickable:hover {
 		background-color: #eeeeee;
 		cursor: pointer;
 	}
