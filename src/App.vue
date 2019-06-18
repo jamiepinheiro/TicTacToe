@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<h1 class="my-5">Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
+		<h1 class="mb-3 jumbotron bg">Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
 		<zoom-center-transition>
 			<SelectGame v-if="!inGame" :startGame="startGame" :key="1"></SelectGame>
 			<Game v-if="inGame" :players="players" :restart="restart" :key="2"/>
@@ -45,6 +45,10 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
-	color: #2c3e50;
+}
+
+.bg {
+	color: white;
+	background: linear-gradient(to right, rgb(7, 185, 255) , rgb(4, 255, 138));
 }
 </style>

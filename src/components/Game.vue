@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h3 v-if="!gameover" class="mb-3">
+		<h3 v-if="!gameover" class="col-md-3 col-sm-10 mx-auto mb-3 p-3 bg-primary text-white">
 			<span :class="{'font-weight-bold': currentPlayer == 0}">{{players[0]}}</span> 
 			vs 
 			<span :class="{'font-weight-bold': currentPlayer == 1}">{{players[1]}}</span>
@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</fade-transition>
-		<table class="col-md-3 col-sm-10 mx-auto">
+		<table class="col-md-3 col-sm-10 mx-auto bg-light">
 			<tr v-for="y in indexes" :key=y>
 				<td v-for="x in indexes" :key=x>
 					<cell 
