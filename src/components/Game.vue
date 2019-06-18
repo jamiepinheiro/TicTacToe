@@ -1,10 +1,6 @@
 <template>
 	<div>
-		<h3 v-if="!gameover" class="col-md-3 col-sm-10 mx-auto mb-3 p-3 bg-primary text-white">
-			<span :class="{'font-weight-bold': currentPlayer == 0}">{{players[0]}}</span> 
-			vs 
-			<span :class="{'font-weight-bold': currentPlayer == 1}">{{players[1]}}</span>
-		</h3>
+		<CurrentPlayerMessage v-if="!gameover" :currentPlayer="currentPlayer" :players="players"></CurrentPlayerMessage>
 		<fade-transition>
 			<EndGameMessage v-if="gameover" :winner="players[currentPlayer]" :restart="restart"></EndGameMessage>
 		</fade-transition>
@@ -22,7 +18,6 @@
 				</td>
 			</tr>
 		</table>
-		
 	</div>
 
 </template>
@@ -30,6 +25,7 @@
 <script>
 import Cell from './Cell.vue'
 import EndGameMessage from './EndGameMessage.vue'
+import CurrentPlayerMessage from './CurrentPlayerMessage.vue'
 
 export default {
 	props: ['players', 'restart'],
@@ -47,7 +43,8 @@ export default {
 	},
 	components: {
 		Cell,
-		EndGameMessage
+		EndGameMessage,
+		CurrentPlayerMessage
 	},
 	methods: {
 		// Executed by a cell when it is marked by a player
