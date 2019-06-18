@@ -5,7 +5,8 @@
 			donut: val == 'd',
 			cinnamon: val == 'c',
 			clickableDonut: val == '' && gameActive && nextMove == 'd',
-			clickableCinnamon: val == '' && gameActive && nextMove == 'c'
+			clickableCinnamon: val == '' && gameActive && nextMove == 'c',
+			highlighted: highlighted
 			}">
 	</div>
 </template>
@@ -13,7 +14,7 @@
 <script>
 
 export default {
-	props: ["coordinates", "clickCell", "val", "gameActive", "nextMove"],
+	props: ["coordinates", "clickCell", "val", "gameActive", "nextMove", "highlighted"],
 	data() {
 		return {
 			donut: false,
@@ -48,5 +49,9 @@ export default {
 		opacity: 0.2;
 		background-image: url("../assets/cinnamon.svg");
 		cursor: pointer;
+	}
+
+	.highlighted {
+		background-color: rgba(0, 255, 55, 0.24)
 	}
 </style>

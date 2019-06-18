@@ -1,15 +1,12 @@
 <template>
 	<div>
-		<div class="jumbotron">
-			<h1>Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
-			<h3 class="mb-3">
-			<span :class="{'text-light bg-success': currentPlayer == 0}">{{players[0]}}</span> 
+		<h1>Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
+		<h3 class="mb-3">
+			<span :class="{'marked': currentPlayer == 0}">{{players[0]}}</span> 
 			vs 
-			<span :class="{'text-light bg-success': currentPlayer == 1}">{{players[1]}}</span>
-			</h3>
-		</div>
-		
-		<table class="col-md-4 col-sm-10 mx-auto">
+			<span :class="{'marked': currentPlayer == 1}">{{players[1]}}</span>
+		</h3>
+		<table class="col-md-3 col-sm-10 mx-auto">
 			<tr v-for="y in indexes" :key=y>
 				<td v-for="x in indexes" :key=x>
 					<cell 
@@ -17,15 +14,16 @@
 						:clickCell="clickCell"
 						:val="board[y][x]"
 						:gameActive="!gameover"
-						:nextMove="options[currentPlayer]">
+						:nextMove="options[currentPlayer]"
+						:highlighted="coordInList([x, y], winningThreeCells)">
 					</cell>
 				</td>
 			</tr>
 		</table>
 		<div v-if="gameover" class="col-12">
-			<div class="col-md-4 col-sm-10 alert alert-info mx-auto m-5 p-3">
+			<div class="col-md-4 col-sm-10 alert alert-success mx-auto m-5 p-3">
 				<h2>Game Over!</h2>
-				<h3 v-if="draw">Its a draw!</h3>
+				<h3 v-if="draw">Its a draw 😔</h3>
 				<h3 v-else> {{players[currentPlayer]}} has won 🎉🎉</h3>
 			</div>
 		</div>
@@ -45,7 +43,8 @@ export default {
 			indexes: [0, 1, 2],
 			options: ['d', 'c'],
 			gameover: false,
-			draw: false
+			draw: false,
+			winningThreeCells: []
 		}
 	},
 	components: {
@@ -60,23 +59,26 @@ export default {
 			}
 		},
 		checkGameover(coordinates) {
-			// Possible '3 in a rows' that could lead to gameover state
-			const row = this.board[coordinates[1]]
-			const col = [this.board[0][coordinates[0]], this.board[1][coordinates[0]], this.board[2][coordinates[0]]];
-			const diag1 = [this.board[0][0], this.board[1][1], this.board[2][2]];
-			const diag2 = [this.board[0][2], this.board[1][1], this.board[2][0]];
-			const possible3Rows = [row, col];
+			// Possible '3 in a rows' coordinates that could lead to gameover state
+			const col = [[coordinates[0], 0], [coordinates[0], 1], [coordinates[0], 2]]
+			const row = [[0, coordinates[1]], [1, coordinates[1]], [2, coordinates[1]]]
+			const diag1 = [[0, 0], [1, 1], [2, 2]]
+			const diag2 = [[0, 2], [1, 1], [2, 0]]
+			const possible3Rows = [col, row];
 
 			// Only need to check the diagonals if the marked cell was on one
-			if (diag1.includes(coordinates))
+			if (this.coordInList(coordinates, diag1))
 				possible3Rows.push(diag1);
-			if (diag2.includes(coordinates))
+			if (this.coordInList(coordinates, diag2))
 				possible3Rows.push(diag2);
 
 			// Check each row to see if its a winning row
 			for (let i = 0; i < possible3Rows.length; i++) {
-				if (new Set(possible3Rows[i]).size === 1) {
+				const rowValues = possible3Rows[i].map(coord => this.board[coord[1]][coord[0]]);
+				
+				if (new Set(rowValues).size === 1) {
 					this.gameover = true;
+					this.winningThreeCells = possible3Rows[i];
 					return;
 				}
 			}
@@ -88,6 +90,15 @@ export default {
 			}else {
 				this.currentPlayer = this.currentPlayer == 1 ? 0 : 1;
 			}
+		},
+		// Helper that checks if a specific coord is in a list
+		coordInList(coord, list) {
+			for (let i = 0; i < list.length; i++) {
+				if (list[i][0] === coord[0] && list[i][1] === coord[1]) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }
