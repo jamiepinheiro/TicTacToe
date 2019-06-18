@@ -1,16 +1,38 @@
 <template>
 	<div id="app">
-		<Game :players="['Player 1', 'Player 2']"/>
+		<h1 class="my-5">Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
+		<SelectGame v-if="!inGame" :startGame="startGame"></SelectGame>
+		<Game v-else :players="players" :restart="restart"/>
 	</div>
 </template>
 
 <script>
 import Game from './components/Game.vue'
+import SelectGame from './components/SelectGame.vue'
 
 export default {
-	name: 'app',
+	data() {
+		return {
+			players: [],
+			inGame: false,
+		}
+	},
 	components: {
-		Game
+		Game,
+		SelectGame
+	},
+	methods: {
+		startGame(mode) {
+			if (mode == "pvp") {
+				this.players = ['Player 1', 'Player 2']
+			} else if (mode == "pva") {
+				this.players = ['Player', 'AI']
+			}
+			this.inGame = true;
+		},
+		restart() {
+			this.inGame = false;
+		}
 	}
 }
 </script>

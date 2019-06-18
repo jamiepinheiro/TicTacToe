@@ -1,12 +1,11 @@
 <template>
 	<div>
-		<h1 class="my-5">Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
-		<h3 class="mb-3">
+		<h3 v-if="!gameover" class="mb-3">
 			<span :class="{'font-weight-bold': currentPlayer == 0}">{{players[0]}}</span> 
 			vs 
 			<span :class="{'font-weight-bold': currentPlayer == 1}">{{players[1]}}</span>
 		</h3>
-		<div v-if="gameover" class="col-12">
+		<div v-else class="col-12">
 			<div class="col-md-4 col-sm-10 alert alert-success mx-auto m-5 p-3">
 				<h2>Game Over!</h2>
 				<h3 v-if="draw">Its a draw 😔</h3>
@@ -37,7 +36,7 @@
 import Cell from './Cell.vue'
 
 export default {
-	props: ['players'],
+	props: ['players', 'restart'],
 	data() {
 		return {
 			currentPlayer: 0,
@@ -101,13 +100,6 @@ export default {
 				}
 			}
 			return false;
-		},
-		restart() {
-			this.currentPlayer = 0,
-			this.board = Array(3).fill().map(()=>Array(3).fill(''));
-			this.gameover = false;
-			this.draw = false;
-			this.winningThreeCells = [];
 		}
 	}
 }
