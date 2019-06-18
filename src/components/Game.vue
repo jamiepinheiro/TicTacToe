@@ -1,11 +1,19 @@
 <template>
 	<div>
-		<h1>Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
+		<h1 class="my-5">Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
 		<h3 class="mb-3">
-			<span :class="{'marked': currentPlayer == 0}">{{players[0]}}</span> 
+			<span :class="{'font-weight-bold': currentPlayer == 0}">{{players[0]}}</span> 
 			vs 
-			<span :class="{'marked': currentPlayer == 1}">{{players[1]}}</span>
+			<span :class="{'font-weight-bold': currentPlayer == 1}">{{players[1]}}</span>
 		</h3>
+		<div v-if="gameover" class="col-12">
+			<div class="col-md-4 col-sm-10 alert alert-success mx-auto m-5 p-3">
+				<h2>Game Over!</h2>
+				<h3 v-if="draw">Its a draw 😔</h3>
+				<h3 v-else> {{players[currentPlayer]}} has won 🎉🎉</h3>
+				<button @click="restart()" class="btn btn-primary col-6 p-2">Restart</button>
+			</div>
+		</div>
 		<table class="col-md-3 col-sm-10 mx-auto">
 			<tr v-for="y in indexes" :key=y>
 				<td v-for="x in indexes" :key=x>
@@ -20,13 +28,7 @@
 				</td>
 			</tr>
 		</table>
-		<div v-if="gameover" class="col-12">
-			<div class="col-md-4 col-sm-10 alert alert-success mx-auto m-5 p-3">
-				<h2>Game Over!</h2>
-				<h3 v-if="draw">Its a draw 😔</h3>
-				<h3 v-else> {{players[currentPlayer]}} has won 🎉🎉</h3>
-			</div>
-		</div>
+		
 	</div>
 
 </template>
@@ -39,12 +41,12 @@ export default {
 	data() {
 		return {
 			currentPlayer: 0,
-			board: Array(3).fill().map(()=>Array(3).fill('')), //3 by 3 matrix that will store game data
 			indexes: [0, 1, 2],
 			options: ['d', 'c'],
 			gameover: false,
 			draw: false,
-			winningThreeCells: []
+			winningThreeCells: [],
+			board: Array(3).fill().map(()=>Array(3).fill('')), //3 by 3 matrix that will store game data
 		}
 	},
 	components: {
@@ -99,6 +101,13 @@ export default {
 				}
 			}
 			return false;
+		},
+		restart() {
+			this.currentPlayer = 0,
+			this.board = Array(3).fill().map(()=>Array(3).fill(''));
+			this.gameover = false;
+			this.draw = false;
+			this.winningThreeCells = [];
 		}
 	}
 }
