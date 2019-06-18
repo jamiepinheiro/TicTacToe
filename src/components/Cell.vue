@@ -1,14 +1,19 @@
 <template>
 	<div 
-	@click="clickCell(coordinates)"
-	:class="{ donut: val=='d', cinnamon: val=='c', clickable: val == ''}">
+		@click="clickCell(coordinates)"
+		:class="{ 
+			donut: val == 'd',
+			cinnamon: val == 'c',
+			clickableDonut: val == '' && gameActive && nextMove == 'd',
+			clickableCinnamon: val == '' && gameActive && nextMove == 'c'
+			}">
 	</div>
 </template>
 
 <script>
 
 export default {
-	props: ["coordinates", "clickCell", "val"],
+	props: ["coordinates", "clickCell", "val", "gameActive", "nextMove"],
 	data() {
 		return {
 			donut: false,
@@ -33,8 +38,15 @@ export default {
 		background-image: url("../assets/cinnamon.svg");
 	}
 
-	.clickable:hover {
-		background-color: #eeeeee;
+	.clickableDonut:hover {
+		opacity: 0.2;
+		background-image: url("../assets/donut.svg");
+		cursor: pointer;
+	}
+
+	.clickableCinnamon:hover {
+		opacity: 0.2;
+		background-image: url("../assets/cinnamon.svg");
 		cursor: pointer;
 	}
 </style>
