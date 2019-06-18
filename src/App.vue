@@ -1,8 +1,10 @@
 <template>
 	<div id="app">
 		<h1 class="my-5">Healthy Vs Unhealthy Food Tic-Tac-Toe</h1>
-		<SelectGame v-if="!inGame" :startGame="startGame"></SelectGame>
-		<Game v-else :players="players" :restart="restart"/>
+		<zoom-center-transition>
+			<SelectGame v-if="!inGame" :startGame="startGame" :key="1"></SelectGame>
+			<Game v-if="inGame" :players="players" :restart="restart" :key="2"/>
+		</zoom-center-transition>
 	</div>
 </template>
 
