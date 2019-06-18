@@ -28,7 +28,7 @@ export default {
 			if (mode == "pvp") {
 				this.players = ['Player 1', 'Player 2']
 			} else if (mode == "pva") {
-				this.players = ['Player', 'AI']
+				this.players = ['Player 1', 'AI']
 			}
 			this.inGame = true;
 		},
