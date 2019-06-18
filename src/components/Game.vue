@@ -6,14 +6,7 @@
 			<span :class="{'font-weight-bold': currentPlayer == 1}">{{players[1]}}</span>
 		</h3>
 		<fade-transition>
-			<div v-if="gameover" class="col-12">
-				<div class="col-md-4 col-sm-10 alert alert-success mx-auto m-5 p-3">
-					<h2>Game Over!</h2>
-					<h3 v-if="draw">Its a draw 😔</h3>
-					<h3 v-else> {{players[currentPlayer]}} has won 🎉🎉</h3>
-					<button @click="restart()" class="btn btn-primary col-6 p-2">Restart</button>
-				</div>
-			</div>
+			<EndGameMessage v-if="gameover" :winner="players[currentPlayer]" :restart="restart"></EndGameMessage>
 		</fade-transition>
 		<table class="col-md-3 col-sm-10 mx-auto bg-light">
 			<tr v-for="y in indexes" :key=y>
@@ -36,6 +29,7 @@
 
 <script>
 import Cell from './Cell.vue'
+import EndGameMessage from './EndGameMessage.vue'
 
 export default {
 	props: ['players', 'restart'],
@@ -52,7 +46,8 @@ export default {
 		}
 	},
 	components: {
-		Cell
+		Cell,
+		EndGameMessage
 	},
 	methods: {
 		// Executed by a cell when it is marked by a player
