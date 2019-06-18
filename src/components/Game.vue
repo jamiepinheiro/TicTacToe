@@ -2,7 +2,7 @@
 	<div>
 		<CurrentPlayerMessage v-if="!gameover" :currentPlayer="currentPlayer" :players="players"></CurrentPlayerMessage>
 		<fade-transition>
-			<EndGameMessage v-if="gameover" :winner="players[currentPlayer]" :restart="restart"></EndGameMessage>
+			<EndGameMessage v-if="gameover" :winner="players[currentPlayer]" :restart="restart" :draw="draw"></EndGameMessage>
 		</fade-transition>
 		<table class="col-md-3 col-sm-10 mx-auto bg-light">
 			<tr v-for="y in indexes" :key=y>

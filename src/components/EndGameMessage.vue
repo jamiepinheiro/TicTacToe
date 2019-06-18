@@ -11,7 +11,7 @@
 
 <script>
 export default {
-	props: ["winner", "restart"]
+	props: ["winner", "restart", "draw"]
 }
 </script>
 
