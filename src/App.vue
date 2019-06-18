@@ -50,5 +50,6 @@ export default {
 .bg {
 	color: white;
 	background: linear-gradient(to right, rgb(7, 185, 255) , rgb(4, 255, 138));
+	border-radius: 0%;
 }
 </style>
