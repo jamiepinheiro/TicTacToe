@@ -44,6 +44,7 @@ export default {
 			currentPlayer: 0,
 			indexes: [0, 1, 2],
 			options: ['d', 'c'],
+			size: 3,
 			gameover: false,
 			draw: false,
 			winningThreeCells: [],
@@ -59,6 +60,10 @@ export default {
 			if (this.board[coordinates[1]][coordinates[0]] === '' && !this.gameover){
 				this.board[coordinates[1]][coordinates[0]] = this.options[this.currentPlayer];
 				this.checkGameover(coordinates);
+
+				if (this.players[this.currentPlayer] === "AI") {
+					this.performAIMove();
+				}
 			}
 		},
 		checkGameover(coordinates) {
@@ -102,6 +107,17 @@ export default {
 				}
 			}
 			return false;
+		},
+		// Helper to perform AI move
+		performAIMove() {
+			for (let i = 0; i < this.size; i++) {
+				for (let j = 0; j < this.size; j++) {
+					if (this.board[i][j] === '') {
+						this.clickCell([j, i]);
+						return;
+					}
+				}
+			}
 		}
 	}
 }
